@@ -1,4 +1,4 @@
-package app.dto.dao;
+package app.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

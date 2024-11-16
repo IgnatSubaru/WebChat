@@ -1,15 +1,16 @@
 package app.controller;
 
 
-import app.dto.dao.ChatDAO;
-import app.dto.dao.MessageDAO;
-import app.dto.dao.UserChatDAO;
-import app.dto.dao.UserDAO;
+import app.dao.ChatDAO;
+import app.dao.MessageDAO;
+import app.dao.UserChatDAO;
+import app.dao.UserDAO;
 import app.dto.MessageDTO;
 import app.dto.UserDTO;
 import jakarta.servlet.http.HttpServlet;
 import app.model.Chat;
 import app.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,24 +19,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/WebChat")
+@RequiredArgsConstructor
 public class ChatController extends HttpServlet {
 
     private final ChatDAO chatDAO;
     private final UserChatDAO userChatDAO;
     private final MessageDAO messageDAO;
     private final UserDAO userDAO;
-
-    public ChatController(
-            ChatDAO chatDAO,
-            UserChatDAO userChatDAO,
-            MessageDAO messageDAO,
-            UserDAO userDAO
-    ){
-        this.chatDAO = chatDAO;
-        this.userChatDAO = userChatDAO;
-        this.messageDAO = messageDAO;
-        this.userDAO = userDAO;
-    }
 
     @GetMapping("/allChats")
     public List<Chat> getAllChats(){

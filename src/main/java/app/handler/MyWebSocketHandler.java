@@ -1,5 +1,6 @@
 package app.handler;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.util.UriTemplate;
@@ -8,18 +9,11 @@ import app.utils.WebSocketSessionManager;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class MyWebSocketHandler implements WebSocketHandler {
 
     private final WebSocketSessionManager sessionManager;
     private final MessageHandler messageHandler;
-
-    public MyWebSocketHandler(
-            WebSocketSessionManager sessionManager,
-            MessageHandler messageHandler
-    ){
-        this. sessionManager = sessionManager;
-        this.messageHandler = messageHandler;
-    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session){

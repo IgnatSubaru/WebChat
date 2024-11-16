@@ -3,15 +3,16 @@ package app.handler;
 import app.dto.MessageDTO;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import app.dto.dao.ChatDAO;
-import app.dto.dao.MessageDAO;
-import app.dto.dao.UserChatDAO;
-import app.dto.dao.UserDAO;
+import app.dao.ChatDAO;
+import app.dao.MessageDAO;
+import app.dao.UserChatDAO;
+import app.dao.UserDAO;
 import app.exception.DaoException;
 import app.model.Chat;
 import app.model.Message;
 import app.model.User;
 import app.model.UserChat;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
@@ -25,26 +26,14 @@ import java.util.Optional;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class MessageHandler {
+
     private final ChatDAO chatDAO;
     private final UserChatDAO userChatDAO;
     private final UserDAO userDAO;
     private final MessageDAO messageDAO;
     private final WebSocketSessionManager sessionManager;
-
-    public MessageHandler(
-            UserDAO userDAO,
-            ChatDAO chatDAO,
-            UserChatDAO userChatDAO,
-            MessageDAO messageDAO,
-            WebSocketSessionManager sessionManager
-    ){
-        this.userDAO = userDAO;
-        this.chatDAO = chatDAO;
-        this.userChatDAO = userChatDAO;
-        this.messageDAO = messageDAO;
-        this.sessionManager = sessionManager;
-    }
 
     public void handleMessage(WebSocketSession session, String message) {
         JSONObject jsonRequest = new JSONObject(message);

@@ -1,11 +1,11 @@
-package app.dto.dao;
+package app.dao;
 
 import jakarta.persistence.EntityManager;
 import app.model.Chat;
 import app.model.User;
 import app.model.UserChat;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,11 +13,8 @@ import java.util.List;
 @Repository
 public class UserChatDAO {
 
-    private final EntityManager entityManager;
-    @Autowired
-    public UserChatDAO(EntityManager entityManager){
-        this.entityManager = entityManager;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Transactional
     public UserChat save(UserChat userChat){

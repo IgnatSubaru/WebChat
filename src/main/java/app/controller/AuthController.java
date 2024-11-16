@@ -1,24 +1,22 @@
 package app.controller;
 
 import com.google.gson.JsonObject;
-import app.dto.dao.UserDAO;
+import app.dao.UserDAO;
 import app.model.User;
 import java.util.Map;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final UserDAO userDAO;
-
-    public AuthController(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     @PostMapping(value = "/login",
             consumes = "application/json",

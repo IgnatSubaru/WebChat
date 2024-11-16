@@ -1,4 +1,4 @@
-package app.dto.dao;
+package app.dao;
 
 import app.dto.MessageDTO;
 import app.model.Chat;
