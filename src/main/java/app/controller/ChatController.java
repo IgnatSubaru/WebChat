@@ -1,70 +1,66 @@
 package app.controller;
 
 
-import app.dao.ChatDAO;
-import app.dao.MessageDAO;
-import app.dao.UserChatDAO;
-import app.dao.UserDAO;
 import app.dto.MessageDTO;
 import app.dto.UserDTO;
+import app.service.ChatService;
+import app.service.MessageService;
+import app.service.UserChatService;
+import app.service.UserService;
 import jakarta.servlet.http.HttpServlet;
 import app.model.Chat;
-import app.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/WebChat")
 @RequiredArgsConstructor
 public class ChatController extends HttpServlet {
 
-    private final ChatDAO chatDAO;
-    private final UserChatDAO userChatDAO;
-    private final MessageDAO messageDAO;
-    private final UserDAO userDAO;
+    private final ChatService chatService;
+    private final UserChatService userChatService;
+    private final MessageService messageService;
+    private final UserService userService;
 
     @GetMapping("/allChats")
-    public List<Chat> getAllChats(){
-        return chatDAO.findAll();
+    public  ResponseEntity<List<Chat>> getAllChats(){
+        return ResponseEntity.status(HttpStatus.OK).body(chatService.getAllChats());
     }
 
     @GetMapping("/allUsers")
-    public List<UserDTO> getAllUsers(){
-        return userDAO.findAll();
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
     }
 
     @GetMapping("/user_id={id}/chats")
-    public List<Chat> getUserChats(@PathVariable("id") int id){
-        Optional<User> user = userDAO.findById(id);
-        return userChatDAO.findChatsByUser(user.get());
+    public ResponseEntity<List<Chat>> getUserChats(@PathVariable("id") int id){
+        return ResponseEntity.status(HttpStatus.OK).body(userChatService.getChatsByUserId(id));
     }
 
     @GetMapping("/chat_id={id}/messages")
-    public List<MessageDTO> getChatMessages(@PathVariable("id") int id){
-        Chat chat = chatDAO.findById(id).get();
-        return messageDAO.findMessagesByChatId(chat);
+    public ResponseEntity<List<MessageDTO>> getChatMessages(@PathVariable("id") int id){
+        return ResponseEntity.status(HttpStatus.OK).body(messageService.getMessagesByChatId(id));
     }
 
     @PostMapping("/createChat")
     @ResponseBody
     public ResponseEntity<Chat> createChat(@RequestBody Chat chat){
-        return ResponseEntity.status(HttpStatus.OK).body(chatDAO.save(chat));
+        return ResponseEntity.status(HttpStatus.OK).body(chatService.create(chat));
     }
 
     @PutMapping("/updateChat")
     @ResponseBody
     public ResponseEntity<Chat> updateChat(@RequestBody Chat chat){
-        return ResponseEntity.status(HttpStatus.OK).body(chatDAO.update(chat));
+        return ResponseEntity.status(HttpStatus.OK).body(chatService.update(chat));
     }
 
     @DeleteMapping("/deleteChat")
     @ResponseBody
-    public boolean deleteChat(@RequestBody Chat chat){
-        return chatDAO.delete(chat);
+    public ResponseEntity deleteChat(@RequestBody Chat chat){
+        return ResponseEntity.status(HttpStatus.OK).body(chatService.delete(chat));
     }
 
 }

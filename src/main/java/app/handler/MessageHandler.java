@@ -121,7 +121,7 @@ public class MessageHandler {
         JsonObject messageJson = new JsonObject();
         JsonArray messagesJson = new JsonArray();
 
-        List<MessageDTO> messages = messageDAO.findMessagesByChatId(chat);
+        List<MessageDTO> messages = messageDAO.findMessagesByChat(chat);
 
         for(MessageDTO messageDTO: messages){
             messageJson.addProperty("sender", messageDTO.getSenderName());

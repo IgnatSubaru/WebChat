@@ -25,7 +25,7 @@ public class MessageDAO {
         return message;
     }
 
-    public List<MessageDTO> findMessagesByChatId(Chat chat){
+    public List<MessageDTO> findMessagesByChat(Chat chat){
         List<MessageDTO> messages = new ArrayList<>();
         try {
             String jpql = "SELECT new app.dto.MessageDTO(m.text, m.user.name) FROM Message m WHERE m.chat = :chat";
